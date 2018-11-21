@@ -12,15 +12,16 @@ async function google_api_query(q_string, num_page){
     var searchUrl   = encodeURI(uri)
     
    try{
-        var response = await axios.get(searchUrl)
+        var response = await axios.get(searchUrl);
+        var items = response.data.items;
+        //console.log(items);
+        return items;
    }catch(error){
        console.log(error);
    }
     
    
-    var items = response.data.items;
-    console.log(items);
-    return items;
+   
 }
 
 
@@ -39,12 +40,10 @@ module.exports = {
         
         };
 
-        for(var i = 0 ; i < 10 ; i++){
-            try{
-                let result = await google_api_query('shenkar', 1)
-            }catch(error){
-                //console.log(error)
-            }
+        for(var i = 0 ; i < 3 ; i++){
+           
+            let result = await google_api_query('shenkar', i)
+            console.log('result' + result);
             let filtetResult = result.map(data=>{
                 var newObj = {};
                 newObj['htmlSnippet']=data.htmlSnippet;
